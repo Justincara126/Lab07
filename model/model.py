@@ -1,6 +1,7 @@
 from database.museo_DAO import MuseoDAO
 from database.artefatto_DAO import ArtefattoDAO
 
+
 '''
     MODELLO: 
     - Rappresenta la struttura dati
@@ -17,13 +18,37 @@ class Model:
     def get_artefatti_filtrati(self, museo:str, epoca:str):
         """Restituisce la lista di tutti gli artefatti filtrati per museo e/o epoca (filtri opzionali)."""
         # TODO
+        artefatti_filtrati=self._artefatto_dao.get_artefatti_con_filtro(museo, epoca)
+        artefatti_filtrati.sort()
+
+        return artefatti_filtrati
+
+
+
+
 
     def get_epoche(self):
         """Restituisce la lista di tutte le epoche."""
         # TODO
+        artefatti=self._artefatto_dao.get_artefatti()
+        epoche=set()
+        for i in artefatti:
+            epoche.add(i.epoca)
+        self._lista_epoche=epoche.sort()
+        return self._lista_epoche
+
+
+
 
     # --- MUSEI ---
     def get_musei(self):
         """ Restituisce la lista di tutti i musei."""
-        # TODO
+
+        if len(self._museo_dao.get_museo()) == 0:
+                self._museo_dao = self._museo_dao.get_museo()
+                return self._museo_dao
+        else:
+                print('No need to read again from database using SQL query')
+                return self._museo_dao
+
 

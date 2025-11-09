@@ -37,9 +37,20 @@ class View:
 
         # --- Sezione 2: Filtraggio ---
         # TODO
+        lista_musei=self.controller.dropdown_musei()
+
+        self.dropdown1=ft.Dropdown(label='musei',width=500)
+        #self.controller.dropdown1_add_widget()
+        self.dropdown2=ft.Dropdown(label='tipo', on_change=self.controller.handler_tipologia)
+        riga_dropdown=ft.Row(on_change=self.controller.handler_museo,alignment=ft.MainAxisAlignment.CENTER)
 
         # Sezione 3: Artefatti
         # TODO
+        self.btn_mostra = ft.ElevatedButton(text = "Mostra artefatti",
+                                            on_click = self.controller.mostra_artefatti)
+
+        self.lista_finale = ft.ListView(expand=True, spacing=5, padding=10, auto_scroll=True)
+
 
         # --- Toggle Tema ---
         self.toggle_cambia_tema = ft.Switch(label="Tema scuro", value=True, on_change=self.cambia_tema)
@@ -52,12 +63,19 @@ class View:
             self.txt_titolo,
             ft.Divider(),
 
+
             # Sezione 2: Filtraggio
             # TODO
+            riga_dropdown,
+            ft.Divider(),
 
             # Sezione 3: Artefatti
             # TODO
+            ft.Row(self.btn_mostra,alignment=ft.MainAxisAlignment.CENTER),
+            self.lista_finale,
         )
+        self.controller.popola_dropdown_musei()
+        self.controller.popola_dropdown_epoche()
 
         self.page.scroll = "adaptive"
         self.page.update()

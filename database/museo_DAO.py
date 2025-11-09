@@ -8,6 +8,17 @@ from model.museoDTO import Museo
 
 class MuseoDAO:
     def __init__(self):
-        pass
+        self.lista=[]
 
     # TODO
+    def get_museo(self):
+        cnx = ConnessioneDB.get_connection()
+        cursor = cnx.cursor(dictionary=True)
+        cursor.execute("SELECT * FROM museo")
+        for row in cursor:
+            museo=Museo(row['id'],row['nome'],row['tipologia'])
+            self.lista.append(museo)
+
+
+        return self.lista
+
